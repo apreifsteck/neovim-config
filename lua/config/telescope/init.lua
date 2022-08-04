@@ -8,15 +8,20 @@ require('telescope').setup {
       horizontal = {mirror = false},
       vertical = {mirror = false}
     },
-    find_command = {
-      'rg', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case'
+    pickers = {
+      find_files = {
+        find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+        hidden = true,
+        no_ignore = false,
+        no_ignore_parent = false
+      }
     },
     prompt_prefix = " ",
     selection_caret = " ",
     entry_prefix = "  ",
     initial_mode = "insert",
     selection_strategy = "reset",
-    sorting_strategy = "descending",
+    sorting_strategy = "ascending",
     layout_strategy = "horizontal",
     file_sorter = require'telescope.sorters'.get_fuzzy_file,
     file_ignore_patterns = {},

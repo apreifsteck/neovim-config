@@ -1,5 +1,4 @@
 local wk = require('which-key')
-local terminal = require('toggleterm.terminal').Terminal
 
 local toggle_float = function()
   local float = terminal:new({ direction = "float" })
@@ -12,16 +11,17 @@ local toggle_lazygit = function()
 end
 
 local mappings = {
-  q = { ':q<CR>', 'Quit' },
+  q = { ':qa<CR>', 'Quit' },
   Q = { ':wq<CR>', 'Save and Quit' },
   w = { ':w<CR>', 'Save' },
   x = { ':bdelete<CR>', 'Close' },
+  e = { ':NvimTreeToggle<CR>', 'File Explorer'},
   E = { ':e ~/.config/nvim/init.lua<CR>', 'Edit Root Config' },
-  f = { ':Telescope find_files<CR>', 'Find' },
+  f = { ':Telescope git_files<CR>', 'Git Find' },
   r = { ':Telescope live_grep<CR>', 'Grep' },
   t = {
     name = "Terminal",
-    g = { ":ToggleTerm<cr>", "Split Below" },
+    v = { ":ToggleTerm size=50 direction=vertical<cr>", "Split Right" },
     f = { toggle_float, "Floating Terminal" },
     l = { toggle_lazygit, "LazyGit" }
   },
@@ -49,6 +49,7 @@ local mappings = {
   },
   d = {
     name = "Diagnostics",
+    d = { ":TroubleToggle document_diagnostics<CR>", "Toggle Document Diagnostics"},
     t = { ":TroubleToggle<cr>", "Toggle Diagnostics List" }
   },
 }

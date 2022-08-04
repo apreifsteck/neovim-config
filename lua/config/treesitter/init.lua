@@ -13,7 +13,6 @@ require 'nvim-treesitter.configs'.setup {
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
-
   auto_install = true,
 
   highlight = {
@@ -30,6 +29,7 @@ require 'nvim-treesitter.configs'.setup {
     max_file_lines = nil,
   },
   autopairs = { enable = true },
+  ignore_install = { "phpdoc" },
   incremental_selection = {
     enable = true,
     keymaps = {

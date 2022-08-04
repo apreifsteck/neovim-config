@@ -6,14 +6,21 @@ function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-map('i', 'jk', '<Esc>')
+map('i', 'fg', '<Esc>')
 map('', '<Space>', '<Nop>')
 map("n", "<Leader>sv", ":source $MYVIMRC<CR>")
 
-map("n", "<C-J>", "<C-W><C-J>")
-map("n", "<C-K>", "<C-W><C-K>")
-map("n", "<C-L>", "<C-W><C-L>")
-map("n", "<C-H>", "<C-W><C-H>")
-map('n', '<Leader>e', ':NvimTreeToggle<CR>', {silent = false})
+map('n', '<C-w>', '<cmd>bp<bar>sp<bar>bn<bar>bd<CR>')
+map('n', '<C-h>', '<cmd>bprevious<CR>')
+map('n', '<C-l>', '<cmd>bnext<CR>')
+map('n', '<C-S-h>', '<cmd>BufferLineMovePrev<CR>')
+map('n', '<C-S-l>', '<cmd>BufferLineMoveNext<CR>')
+-- or use command LspSagaFinder
+-- map("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
+map("n", "ff", "<cmd>Telescope git_files<CR>")
+
 map('v', '<', '<gv')
 map('v', '>', '>gv')
+map("n", "ws", ":lua require('nvim-window').pick()<CR>")
+map("t", "<C-t>", "<C-\\><C-n>")
+map("t", "<C-w><C-w>", "<C-\\><C-n><C-w><C-w>")

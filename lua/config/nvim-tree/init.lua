@@ -11,5 +11,8 @@ require('nvim-tree').setup{
     enable = true,
     ignore = true,
   },
+  remove_keymaps = {
+    "s", "S"
+  }
 }
 
