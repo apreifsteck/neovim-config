@@ -52,6 +52,18 @@ local mappings = {
     d = { ":TroubleToggle document_diagnostics<CR>", "Toggle Document Diagnostics"},
     t = { ":TroubleToggle<cr>", "Toggle Diagnostics List" }
   },
+  s = { ':SymbolsOutline<cr>', 'Symbols Outline'},
+  g = {
+    name = "Git",
+    a = {':Git add .<cr>', "git add"},
+    s = {':Git status<cr>', "git status"},
+    c = {':Git commit -m "', "git commit"},
+    p = { 
+      s = {':Git push <cr>', "git push"},
+      b = {':Git push --set-upstream @ <cr>', 'git publish'},
+      l = {':Git pull', "git pull"}
+    },
+  }
 }
 local opts = { prefix = '<leader>' }
 wk.register(mappings, opts)

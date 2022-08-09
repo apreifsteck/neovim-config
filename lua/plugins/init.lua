@@ -1,8 +1,6 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 -- TODO: save on buffer focus lost
--- TODO: toggle relative line numbers when it makes sense
 -- TODO: Shade the inactive window?
--- TODO: code navigation
 -- TODO: status line
 return require('packer').startup(function()
   -- Packer can manage itself
@@ -126,6 +124,15 @@ return require('packer').startup(function()
   -- auto save files
   use {"Pocco81/AutoSave.nvim"}
 
+  -- Automatically toggle relative line numbers 
+  -- insert mode no relative
+  -- normal mode relative
+  use {
+     "sitiom/nvim-numbertoggle",
+     config = function()
+        require("numbertoggle").setup()
+     end
+  }
 
   use {
     'lukas-reineke/indent-blankline.nvim',
@@ -169,6 +176,16 @@ return require('packer').startup(function()
       require('leap').set_default_keymaps()
     end
   }
+
+  -- use {
+  --   'stevearc/aerial.nvim',
+  --   config = function() require('aerial').setup() end
+  -- }
+
+  -- code navigator
+  use {
+    'simrat39/symbols-outline.nvim'
+  } 
   use {
     'https://gitlab.com/yorickpeterse/nvim-window',
     as = 'nvim-window'
