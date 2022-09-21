@@ -17,14 +17,12 @@ local mappings = {
   x = { ':bdelete<CR>', 'Close' },
   e = { ':NvimTreeToggle<CR>', 'File Explorer'},
   E = { ':e ~/.config/nvim/init.lua<CR>', 'Edit Root Config' },
-  f = { ':Telescope git_files<CR>', 'Git Find' },
-  r = { ':Telescope live_grep<CR>', 'Grep' },
-  t = {
-    name = "Terminal",
-    v = { ":ToggleTerm size=50 direction=vertical<cr>", "Split Right" },
-    f = { toggle_float, "Floating Terminal" },
-    l = { toggle_lazygit, "LazyGit" }
+  f = { 
+    name = 'Search',
+    f = { ':Telescope git_files<CR>', 'Git Find' },
+    r = { ':Telescope live_grep<CR>', 'Grep' } 
   },
+  t = {":ToggleTerm size=50 direction=vertical<cr>", "Split Right"},
   l = {
     name = "LSP",
     i = { ":LspInfo<cr>", "Connected Language Servers" },

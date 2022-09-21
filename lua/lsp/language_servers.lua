@@ -6,6 +6,8 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach = function(client, bufnr)
+  -- enable async formatting
+  require("lsp-format").on_attach(client)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -32,11 +34,16 @@ end
 -- Language server set ups
 lspconfig.elixirls.setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = on_attach
+}
+-- JSON
+lspconfig.jsonls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
 }
 lspconfig.sumneko_lua.setup {
   capabilities = capabilities,
-  -- on_attach = on_attach,
+  on_attach = on_attach,
   settings =
   {
     Lua = {

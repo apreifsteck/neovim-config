@@ -1,12 +1,8 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
--- TODO: save on buffer focus lost
--- TODO: Shade the inactive window?
--- TODO: status line
 return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
   -- themes
-  use 'shaunsingh/nord.nvim'
   use { "catppuccin/nvim", as = "catppuccin" }
   use { "Shatur/neovim-ayu" }
   use { "savq/melange" }
@@ -32,9 +28,9 @@ return require('packer').startup(function()
   }
   -- terminal stuff
   -- use 'nikvdp/neomux'
-  use {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
+  use { "akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
     require("toggleterm").setup()
-  end}
+  end }
   --
   -- html tagging and stuff
   use {
@@ -54,7 +50,7 @@ return require('packer').startup(function()
     after = 'nvim-treesitter'
   }
   -- git tool
-  use { 'tpope/vim-fugitive' }
+  -- use { 'tpope/vim-fugitive' }
   -- for surrounding stuff with delimeters
   use {
     "ur4ltz/surround.nvim",
@@ -74,8 +70,8 @@ return require('packer').startup(function()
     requires = { { 'nvim-lua/plenary.nvim' } },
     cmd = 'Telescope', config = "require('config.telescope')"
   }
+  -- LSP stuff
   use { 'neovim/nvim-lspconfig', config = "require('lsp')" }
-  -- use { 'glepnir/lspsaga.nvim', config = "require('config.lspsaga')"}
   use { 'hrsh7th/cmp-nvim-lsp' }
   use { 'hrsh7th/cmp-buffer' }
   use { 'hrsh7th/cmp-path' }
@@ -86,12 +82,19 @@ return require('packer').startup(function()
   use { 'hrsh7th/cmp-nvim-lsp-signature-help' }
   use { 'onsails/lspkind-nvim' }
   use({
-        'williamboman/nvim-lsp-installer',
-        config = function()
-          local lsp_installer = require('nvim-lsp-installer')
-          lsp_installer.setup{}
-        end,
-      })
+    'williamboman/nvim-lsp-installer',
+    config = function()
+      local lsp_installer = require('nvim-lsp-installer')
+      lsp_installer.setup {}
+    end,
+  })
+
+  -- async formatting out of the box
+  use {
+    "lukas-reineke/lsp-format.nvim",
+    config = "require('config.lsp-format')"
+  }
+
   use('ms-jpq/coq_nvim')
 
   use {
@@ -122,30 +125,33 @@ return require('packer').startup(function()
   }
 
   -- auto save files
-  use {"Pocco81/AutoSave.nvim"}
+  use { "Pocco81/AutoSave.nvim" }
 
-  -- Automatically toggle relative line numbers 
+  -- Automatically toggle relative line numbers
   -- insert mode no relative
   -- normal mode relative
   use {
-     "sitiom/nvim-numbertoggle",
-     config = function()
-        require("numbertoggle").setup()
-     end
+    "sitiom/nvim-numbertoggle",
+    config = function()
+      require("numbertoggle").setup()
+    end
   }
 
   use {
     'lukas-reineke/indent-blankline.nvim',
     event = 'BufRead', config = "require('config.blankline')"
   }
-  -- lsp language server
   use {
-    'jose-elias-alvarez/null-ls.nvim',
-    requires = { { 'nvim-lua/plenary.nvim' } },
-    config = "require('config.null-ls')"
+    'tamton-aquib/staline.nvim',
+    config = "require('config.staline')"
   }
-  -- opens a buffer in a full screen window
-  use { "folke/zen-mode.nvim", config = "require('config.zen-mode')" }
+  -- lsp language server
+  -- Didn't really see it helping me, just install the relevant language server
+  -- use {
+  --   'jose-elias-alvarez/null-ls.nvim',
+  --   requires = { { 'nvim-lua/plenary.nvim' } },
+  --   config = "require('config.null-ls')"
+  -- }
 
   -- allows you to comment out blocks of stuff
   use {
@@ -162,7 +168,7 @@ return require('packer').startup(function()
     requires = "kyazdani42/nvim-web-devicons",
     config = "require('config.trouble')"
   }
- -- multi cursor support
+  -- multi cursor support
   use {
     'mg979/vim-visual-multi'
   }
@@ -177,26 +183,19 @@ return require('packer').startup(function()
     end
   }
 
-  -- use {
-  --   'stevearc/aerial.nvim',
-  --   config = function() require('aerial').setup() end
-  -- }
-
-  -- code navigator
-  use {
-    'simrat39/symbols-outline.nvim'
-  } 
   use {
     'https://gitlab.com/yorickpeterse/nvim-window',
     as = 'nvim-window'
   }
+
+  -- session management, this thing is awesome
   use {
-  'rmagatti/auto-session',
-  config = function()
-    require('auto-session').setup {
-      log_level = 'info',
-      auto_session_suppress_dirs = {'~/', '~/Projects'}
-    }
-  end
-}
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {
+        log_level = 'info',
+        auto_session_suppress_dirs = { '~/', '~/Projects' }
+      }
+    end
+  }
 end)
