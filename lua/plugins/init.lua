@@ -7,10 +7,15 @@ return require('packer').startup(function()
   use { "Shatur/neovim-ayu" }
   use { "savq/melange" }
   -- end themes
+
+  -- treesitter
   use { 'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = "require('config.treesitter')"
   }
+
+  -- sticky context as you scroll based on treesitter
+  use 'nvim-treesitter/nvim-treesitter-context'
   -- using packer.nvim
   use { 'akinsho/bufferline.nvim',
     tag = "v2.*",
@@ -198,4 +203,10 @@ return require('packer').startup(function()
       }
     end
   }
+  -- keeps your buffer content from moving when you open windows beneath it
+  use {
+    "luukvbaal/stabilize.nvim",
+    config = function() require("stabilize").setup() end
+  }
+
 end)
