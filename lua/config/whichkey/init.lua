@@ -1,28 +1,18 @@
 local wk = require('which-key')
 
-local toggle_float = function()
-  local float = terminal:new({ direction = "float" })
-  return float:toggle()
-end
-
-local toggle_lazygit = function()
-  local lazygit = terminal:new({ direction = "float", cmd = 'lazygit' })
-  return lazygit:toggle()
-end
-
 local mappings = {
   q = { ':qa<CR>', 'Quit' },
   Q = { ':wq<CR>', 'Save and Quit' },
   w = { ':w<CR>', 'Save' },
   x = { ':bdelete<CR>', 'Close' },
-  e = { ':NvimTreeToggle<CR>', 'File Explorer'},
+  e = { ':NvimTreeToggle<CR>', 'File Explorer' },
   E = { ':e ~/.config/nvim/init.lua<CR>', 'Edit Root Config' },
-  f = { 
+  f = {
     name = 'Search',
     f = { ':Telescope git_files<CR>', 'Git Find' },
-    r = { ':Telescope live_grep<CR>', 'Grep' } 
+    r = { ':Telescope live_grep<CR>', 'Grep' }
   },
-  t = {":ToggleTerm size=50 direction=vertical<cr>", "Split Right"},
+  t = { ":ToggleTerm size=75 direction=vertical<cr>", "Split Right" },
   l = {
     name = "LSP",
     i = { ":LspInfo<cr>", "Connected Language Servers" },
@@ -47,21 +37,21 @@ local mappings = {
   },
   d = {
     name = "Diagnostics",
-    d = { ":TroubleToggle document_diagnostics<CR>", "Toggle Document Diagnostics"},
+    d = { ":TroubleToggle document_diagnostics<CR>", "Toggle Document Diagnostics" },
     t = { ":TroubleToggle<cr>", "Toggle Diagnostics List" }
   },
-  s = { ':SymbolsOutline<cr>', 'Symbols Outline'},
-  g = {
-    name = "Git",
-    a = {':Git add .<cr>', "git add"},
-    s = {':Git status<cr>', "git status"},
-    c = {':Git commit -m "', "git commit"},
-    p = { 
-      s = {':Git push <cr>', "git push"},
-      b = {':Git push --set-upstream @ <cr>', 'git publish'},
-      l = {':Git pull', "git pull"}
-    },
-  }
+  s = { ':SymbolsOutline<cr>', 'Symbols Outline' }
+  -- g = {
+  --   name = "Git",
+  --   a = { ':Git add .<cr>', "git add" },
+  --   s = { ':Git status<cr>', "git status" },
+  --   c = { ':Git commit -m "', "git commit" },
+  --   p = {
+  --     s = { ':Git push <cr>', "git push" },
+  --     b = { ':Git push --set-upstream @ <cr>', 'git publish' },
+  --     l = { ':Git pull', "git pull" }
+  --   },
+  -- }
 }
 local opts = { prefix = '<leader>' }
 wk.register(mappings, opts)

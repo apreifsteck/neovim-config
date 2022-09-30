@@ -57,6 +57,7 @@ return require('packer').startup(function()
   -- git tool
   -- use { 'tpope/vim-fugitive' }
   -- for surrounding stuff with delimeters
+  use 'kdheepak/lazygit.nvim'
   use {
     "ur4ltz/surround.nvim",
     config = function()
@@ -130,7 +131,14 @@ return require('packer').startup(function()
   }
 
   -- auto save files
-  use { "Pocco81/AutoSave.nvim" }
+  use({
+    "Pocco81/auto-save.nvim",
+    config = function()
+      require("auto-save").setup {
+        debounce_delay = 500
+      }
+    end,
+  })
 
   -- Automatically toggle relative line numbers
   -- insert mode no relative
