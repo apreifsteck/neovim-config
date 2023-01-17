@@ -6,3 +6,11 @@ I'd welcome a PR to add them in to this readme though!
 
 # Installation
  - clone this repo into your ~/.config directory and call it `nvim`
+
+# TODO
+- figure out how to get better results out of the frecency searcher
+- add a debounce to auto saving
+- maybe switch to a different session manager?
+- maybe switch to a different package manager (lazy)
+- add an IO inspect snippet
+

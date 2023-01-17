@@ -32,12 +32,26 @@ local on_attach = function(client, bufnr)
 end
 
 -- Language server set ups
+-- Elixir
 lspconfig.elixirls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
+
+-- rust
+lspconfig.rust_analyzer.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+
 -- JSON
 lspconfig.jsonls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+
+-- YAML
+lspconfig.yamlls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }

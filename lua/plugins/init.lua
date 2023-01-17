@@ -36,6 +36,24 @@ return require('packer').startup(function()
   use { "akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
     require("toggleterm").setup()
   end }
+
+  -- popup windows for certain things
+  use({
+    "folke/noice.nvim",
+    config = function()
+      require("noice").setup()
+    end,
+    requires = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    }
+  })
+
+
   --
   -- html tagging and stuff
   use {
@@ -75,6 +93,14 @@ return require('packer').startup(function()
     'nvim-telescope/telescope.nvim',
     requires = { { 'nvim-lua/plenary.nvim' } },
     cmd = 'Telescope', config = "require('config.telescope')"
+  }
+  -- Telescope extensions
+  use {
+    "nvim-telescope/telescope-frecency.nvim",
+    config = function()
+      require "telescope".load_extension("frecency")
+    end,
+    requires = { "kkharji/sqlite.lua" }
   }
   -- LSP stuff
   use { 'neovim/nvim-lspconfig', config = "require('lsp')" }
@@ -135,7 +161,8 @@ return require('packer').startup(function()
     "Pocco81/auto-save.nvim",
     config = function()
       require("auto-save").setup {
-        debounce_delay = 500
+        debounce_delay = 2000,
+        execution_message = { cleaning_interval = 800 }
       }
     end,
   })
@@ -158,13 +185,6 @@ return require('packer').startup(function()
     'tamton-aquib/staline.nvim',
     config = "require('config.staline')"
   }
-  -- lsp language server
-  -- Didn't really see it helping me, just install the relevant language server
-  -- use {
-  --   'jose-elias-alvarez/null-ls.nvim',
-  --   requires = { { 'nvim-lua/plenary.nvim' } },
-  --   config = "require('config.null-ls')"
-  -- }
 
   -- allows you to comment out blocks of stuff
   use {
@@ -180,10 +200,6 @@ return require('packer').startup(function()
     'folke/trouble.nvim',
     requires = "kyazdani42/nvim-web-devicons",
     config = "require('config.trouble')"
-  }
-  -- multi cursor support
-  use {
-    'mg979/vim-visual-multi'
   }
   -- navigation
   use {
@@ -215,6 +231,18 @@ return require('packer').startup(function()
   use {
     "luukvbaal/stabilize.nvim",
     config = function() require("stabilize").setup() end
+  }
+
+  -- Autorun tests
+  use {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "jfpedroza/neotest-elixir"
+    },
+    config = "require('config.neotest')"
   }
 
 end)

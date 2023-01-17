@@ -6,16 +6,22 @@ function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-map('i', 'fg', '<Esc>')
+-- workman maps
+map('n', 'j', 'n')
+map('n', 'J', '<S-n>')
+map('', 'n', 'j')
+map('', 'e', 'k')
+map('i', 'tg', '<Esc>')
+
 map('', '<Space>', '<Nop>')
 map("n", "<Leader>sv", ":source $MYVIMRC<CR>")
 
 -- close buffer
 map('n', '<C-w>', '<cmd>bp<bar>sp<bar>bn<bar>bd<CR>')
 -- move to prev buffer
-map('n', '<C-j>', '<cmd>bprevious<CR>')
+map('n', '<C-n>', '<cmd>bprevious<CR>')
 -- move to next buffer
-map('n', '<C-k>', '<cmd>bnext<CR>')
+map('n', '<C-e>', '<cmd>bnext<CR>')
 -- shift a buffer tab to the left
 map('n', '<C-S-j>', '<cmd>BufferLineMovePrev<CR>')
 -- shift a buffer tab to the right

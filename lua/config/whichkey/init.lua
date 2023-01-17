@@ -10,9 +10,14 @@ local mappings = {
   f = {
     name = 'Search',
     f = { ':Telescope git_files<CR>', 'Git Find' },
-    r = { ':Telescope live_grep<CR>', 'Grep' }
+    r = { ':Telescope live_grep<CR>', 'Grep' },
+    t = { ':Telescope treesitter<CR>', 'Treesitter' },
+    u = { ':Telescope frecency workspace=CWD<CR>', "Frecency" }
   },
-  t = { ":ToggleTerm size=75 direction=vertical<cr>", "Split Right" },
+  t = {
+    n = { "<cmd>lua require('neotest').run.run()<cr>", "Run nearest test" },
+    f = { "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", "Run file" }
+  },
   l = {
     name = "LSP",
     i = { ":LspInfo<cr>", "Connected Language Servers" },
