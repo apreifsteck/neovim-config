@@ -1,8 +1,11 @@
 local lspconfig = require('lspconfig')
-local lsp_installer = require('nvim-lsp-installer')
-lsp_installer.setup {}
+require('mason-lspconfig').setup {
+  ensure_installed = {
+    "lua_ls", "rust_analyzer", "elixirls", "html", "cssls", "sqlls", "jsonls", "yamlls", "bashls" 
+  }
+}
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach = function(client, bufnr)
@@ -60,7 +63,7 @@ lspconfig.bashls.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
   capabilities = capabilities,
   on_attach = on_attach,
   settings =
@@ -84,14 +87,6 @@ lspconfig.sumneko_lua.setup {
       },
     },
   }
-}
-lspconfig.tsserver.setup {
-  capabilities = capabilities,
-  -- on_attach = on_attach,
-}
-lspconfig.pyright.setup {
-  capabilities = capabilities,
-  -- on_attach = on_attach,
 }
 lspconfig.html.setup {
   capabilities = capabilities,

@@ -1,151 +1,118 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
-return require('packer').startup(function()
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
-  -- themes
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use { "Shatur/neovim-ayu" }
-  use { "savq/melange" }
-  -- end themes
+build_with_config = function(package_name)
+  return function()
+    require('config.' .. package_name)
+  end
+end
+return {
 
-  -- treesitter
-  use { 'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
-    config = "require('config.treesitter')"
-  }
-
-  -- sticky context as you scroll based on treesitter
-  use 'nvim-treesitter/nvim-treesitter-context'
-  -- using packer.nvim
-  use { 'akinsho/bufferline.nvim',
-    tag = "v2.*",
-    requires = 'kyazdani42/nvim-web-devicons',
-    config = "require('config.bufferline')"
-  }
-  -- file explorer
-  use {
-    'kyazdani42/nvim-tree.lua',
-    requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icons
-    },
-    tag = 'nightly', -- optional, updated every week. (see issue #1193)
-    config = "require('config.nvim-tree')"
-  }
-  -- terminal stuff
-  -- use 'nikvdp/neomux'
-  use { "akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
-    require("toggleterm").setup()
-  end }
-
-  -- popup windows for certain things
-  use({
-    "folke/noice.nvim",
+  {
+    "Shatur/neovim-ayu",
+    lazy = false,
+    priority = 1000,
     config = function()
-      require("noice").setup()
-    end,
-    requires = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-    }
-  })
-
-
-  --
-  -- html tagging and stuff
-  use {
+      require('ayu').setup({
+        mirage = true,
+      })
+      require('ayu').colorscheme()
+    end
+  },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = build_with_config('treesitter')
+  },
+  {
+    'akinsho/bufferline.nvim',
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    config = build_with_config('bufferline')
+  },
+  {
+    'kyazdani42/nvim-tree.lua',
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    config = build_with_config('nvim-tree'),
+    cmd = "NvimTreeToggle"
+  },
+  -- {
+  --   "folke/noice.nvim",
+  --   config = true,
+  --   requires = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --   }
+  -- },
+  {
     'windwp/nvim-ts-autotag',
     event = 'InsertEnter',
-    after = 'nvim-treesitter'
-  }
+  },
   -- auto complete things like ()
-  use {
+  {
     'windwp/nvim-autopairs',
-    config = "require('config.autopairs')",
-    after = 'nvim-cmp'
-  }
+    config = build_with_config('autopairs'),
+    event = 'BufRead'
+  },
   -- colorize your parenthesis
-  use {
-    'p00f/nvim-ts-rainbow',
-    after = 'nvim-treesitter'
-  }
-  -- git tool
-  -- use { 'tpope/vim-fugitive' }
+  'p00f/nvim-ts-rainbow',
+  'kdheepak/lazygit.nvim',
   -- for surrounding stuff with delimeters
-  use 'kdheepak/lazygit.nvim'
-  use {
+  {
     "ur4ltz/surround.nvim",
-    config = function()
-      require "surround".setup { mappings_style = "surround" }
-    end
-  }
+    opts = { mappings_style = "surround" }
+  },
   -- Will tell you where the keybindings go
-  use {
+  {
     'folke/which-key.nvim',
-    event = 'BufWinEnter', config = "require('config.whichkey')"
-  }
+    event = 'BufWinEnter',
+    config = build_with_config('whichkey')
+  },
 
-  -- fuzzy file finder
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { { 'nvim-lua/plenary.nvim' } },
-    cmd = 'Telescope', config = "require('config.telescope')"
-  }
   -- Telescope extensions
-  use {
+  {
     "nvim-telescope/telescope-frecency.nvim",
-    config = function()
-      require "telescope".load_extension("frecency")
-    end,
-    requires = { "kkharji/sqlite.lua" }
-  }
+    dependencies = { "kkharji/sqlite.lua" }
+  },
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
+  -- fuzzy file finder
+  {
+    'nvim-telescope/telescope.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    cmd = 'Telescope',
+    config = build_with_config('telescope')
+  },
   -- LSP stuff
-  use { 'neovim/nvim-lspconfig', config = "require('lsp')" }
-  use { 'hrsh7th/cmp-nvim-lsp' }
-  use { 'hrsh7th/cmp-buffer' }
-  use { 'hrsh7th/cmp-path' }
-  use { 'hrsh7th/cmp-cmdline' }
-  use { 'hrsh7th/nvim-cmp' }
-  use { 'hrsh7th/cmp-vsnip' }
-  use { 'hrsh7th/vim-vsnip' }
-  use { 'hrsh7th/cmp-nvim-lsp-signature-help' }
-  use { 'onsails/lspkind-nvim' }
-  use({
-    'williamboman/nvim-lsp-installer',
-    config = function()
-      local lsp_installer = require('nvim-lsp-installer')
-      lsp_installer.setup {}
-    end,
-  })
-
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-cmdline',
+  'hrsh7th/nvim-cmp',
+  'hrsh7th/cmp-vsnip',
+  'hrsh7th/vim-vsnip',
+  'hrsh7th/cmp-nvim-lsp-signature-help',
+  'onsails/lspkind-nvim',
+  { 'williamboman/mason.nvim',          config = true },
+  { "williamboman/mason-lspconfig.nvim" },
+  { "neovim/nvim-lspconfig",            config = function() require('lsp') end },
   -- async formatting out of the box
-  use {
+  {
     "lukas-reineke/lsp-format.nvim",
-    config = "require('config.lsp-format')"
-  }
-
-  use('ms-jpq/coq_nvim')
-
-  use {
+    config = true
+  },
+  'ms-jpq/coq_nvim',
+  {
     'norcalli/nvim-colorizer.lua',
-    event = 'BufRead', config = "require('config.colorizer')"
-  }
-
-  use {
+    event = 'BufRead',
+    config = build_with_config('colorizer')
+  },
+  {
     'lewis6991/gitsigns.nvim',
-    config = "require('config.gitsigns')"
-  }
-  -- spell checking
-  use { 'lewis6991/spellsitter.nvim' }
-  use {
-    'glepnir/dashboard-nvim',
-    config = "require('config.dashboard')"
-  }
+    config = build_with_config('gitsigns')
+  },
   -- marks
-  use { 'chentoast/marks.nvim',
+  {
+    'chentoast/marks.nvim',
     config = function()
       require('marks').setup({
         mappings = {
@@ -153,11 +120,12 @@ return require('packer').startup(function()
           prev = "m<Left>"
         }
       })
-    end
-  }
+    end,
+    event = 'BufWinEnter'
+  },
 
   -- auto save files
-  use({
+  {
     "Pocco81/auto-save.nvim",
     config = function()
       require("auto-save").setup {
@@ -165,84 +133,67 @@ return require('packer').startup(function()
         execution_message = { cleaning_interval = 800 }
       }
     end,
-  })
+  },
 
   -- Automatically toggle relative line numbers
   -- insert mode no relative
   -- normal mode relative
-  use {
-    "sitiom/nvim-numbertoggle",
-    config = function()
-      require("numbertoggle").setup()
-    end
-  }
-
-  use {
+  "sitiom/nvim-numbertoggle",
+  {
     'lukas-reineke/indent-blankline.nvim',
-    event = 'BufRead', config = "require('config.blankline')"
-  }
-  use {
+    event = 'BufRead',
+    config = build_with_config('blankline')
+  },
+  {
     'tamton-aquib/staline.nvim',
-    config = "require('config.staline')"
-  }
+    config = build_with_config('staline'),
+    lazy = false
+  },
 
   -- allows you to comment out blocks of stuff
-  use {
+  {
     'numToStr/Comment.nvim',
-    config = "require('config.comment')"
-  }
-  -- optimize vim loading
-  use {
-    'lewis6991/impatient.nvim'
-  }
+    config = build_with_config('comment')
+  },
   -- Shows you all the bad shit that's happening in your code
-  use {
+  {
     'folke/trouble.nvim',
-    requires = "kyazdani42/nvim-web-devicons",
-    config = "require('config.trouble')"
-  }
+    dependencies = { "kyazdani42/nvim-web-devicons" },
+    config = true,
+    cmd = "Trouble"
+  },
   -- navigation
-  use {
+  {
     'ggandor/leap.nvim',
-    requires = {
+    dependencies = {
       'tpope/vim-repeat'
     },
     config = function()
       require('leap').set_default_keymaps()
-    end
-  }
+    end,
+    event = "VeryLazy"
+  },
 
-  use {
+  {
     'https://gitlab.com/yorickpeterse/nvim-window',
-    as = 'nvim-window'
-  }
+    name = 'nvim-window'
+  },
 
   -- session management, this thing is awesome
-  use {
+  {
     'rmagatti/auto-session',
-    config = function()
-      require('auto-session').setup {
-        log_level = 'info',
-        auto_session_suppress_dirs = { '~/', '~/Projects' }
-      }
-    end
-  }
+    opts = {
+      log_level = 'info',
+      auto_session_suppress_dirs = { '~/', '~/Projects' }
+    }
+  },
   -- keeps your buffer content from moving when you open windows beneath it
-  use {
+  {
     "luukvbaal/stabilize.nvim",
-    config = function() require("stabilize").setup() end
-  }
+    config = true,
+    event = "VeryLazy"
+  },
 
-  -- Autorun tests
-  use {
-    "nvim-neotest/neotest",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "antoinemadec/FixCursorHold.nvim",
-      "jfpedroza/neotest-elixir"
-    },
-    config = "require('config.neotest')"
-  }
+  { 'nvim-treesitter/nvim-treesitter-context', event = "VeryLazy" },
 
-end)
+}

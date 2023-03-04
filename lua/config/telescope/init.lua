@@ -1,4 +1,6 @@
 local actions = require('telescope.actions')
+local fb_actions = require "telescope._extensions.file_browser.actions"
+
 require('telescope').setup {
   defaults = {
     layout_config = {
@@ -7,19 +9,6 @@ require('telescope').setup {
       preview_cutoff = 120,
       horizontal = { mirror = false },
       vertical = { mirror = false }
-    },
-    pickers = {
-      find_files = {
-        find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
-        hidden = true,
-        no_ignore = false,
-        no_ignore_parent = false
-      }
-    },
-    extensions = {
-      frecency = {
-        ignore_patterns = { "*.git/*", "*/tmp/*", "*/.elixir_ls/*" }
-      }
     },
     prompt_prefix = " ",
     selection_caret = " ",
@@ -56,5 +45,33 @@ require('telescope').setup {
         ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist
       }
     }
-  }
+  },
+  pickers = {
+    find_files = {
+      find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+      hidden = true,
+      no_ignore = false,
+      no_ignore_parent = false
+    }
+  },
+  extensions = {
+    frecency = {
+      ignore_patterns = { "*.git/*", "*/tmp/*", "*/.elixir_ls/*" }
+    },
+    file_browser = {
+       -- hijack_netrw = true,
+      mappings = {
+        [ "i" ] = {
+          ["<C-o>"] = "select_default",
+          ["<C-d>"] = fb_actions.remove
+        },
+        [ "n" ] = {
+          ["<CR>"] = actions.select_default + actions.center,
+        }
+      }
+    }
+  },
+
 }
+require "telescope".load_extension("frecency")
+require "telescope".load_extension("file_browser")
