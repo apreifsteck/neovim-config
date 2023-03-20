@@ -12,7 +12,8 @@ local mappings = {
     f = { ':Telescope git_files<CR>', 'Git Find' },
     r = { ':Telescope live_grep<CR>', 'Grep' },
     t = { ':Telescope treesitter<CR>', 'Treesitter' },
-    u = { ':Telescope frecency workspace=CWD<CR>', "Frecency" }
+    u = { ':Telescope frecency workspace=CWD<CR>', "Frecency" },
+    b = { ':Telescope buffers<CR>', "Open Buffers" }
   },
   t = {
     n = { "<cmd>lua require('neotest').run.run()<cr>", "Run nearest test" },

@@ -1,7 +1,8 @@
 local lspconfig = require('lspconfig')
 require('mason-lspconfig').setup {
   ensure_installed = {
-    "lua_ls", "rust_analyzer", "elixirls", "html", "cssls", "sqlls", "jsonls", "yamlls", "bashls" 
+    "lua_ls", "rust_analyzer", "elixirls", "html", "cssls", "sqlls", "jsonls", "yamlls", "bashls", "solargraph",
+    "typescript_language_server"
   }
 }
 
@@ -41,12 +42,23 @@ lspconfig.elixirls.setup {
   on_attach = on_attach
 }
 
+lspconfig.solargraph.setup {
+  -- cmd = { "bundle", "exec", "ruby-lsp" },
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+
 -- rust
 lspconfig.rust_analyzer.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
 
+-- typescript
+lspconfig.type_script_language_server.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
 -- JSON
 lspconfig.jsonls.setup {
   capabilities = capabilities,
@@ -60,6 +72,11 @@ lspconfig.yamlls.setup {
 }
 -- Bash
 lspconfig.bashls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach
+}
+
+lspconfig.codespell.setup {
   capabilities = capabilities,
   on_attach = on_attach
 }
